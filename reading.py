@@ -1,6 +1,5 @@
-import win32com.client
+import win32com.client,os,csv
 #pip install pywin32 - run this command for installing above package
-import os
 
 outlook = win32com.client.Dispatch("Outlook.Application").GetNameSpace("MAPI")
 
@@ -19,4 +18,28 @@ subject2 = 'Closure Mails..'
 for m in message:
     # if subject1 in m.Subject or subject2 in m.Subject:
     if subject1 in m.Subject:
-        print(m.body)
+        text_file = open("raw_data.txt", "a")
+        text_file.write(m.body)
+        text_file.close()
+
+file = open("raw_data.txt", "r")
+
+contents = file.read()
+ind = contents.index("Requisition")
+contents=contents[ind:]
+contents = os.linesep.join([s for s in contents.splitlines() if s])
+# print(contents)
+
+file = open('data.csv', 'w+', newline ='')   
+with file:
+    for i in contents.split("\n"):
+        i=i.strip()
+        i=i.split(":")
+    
+        write=csv.writer(file)
+        write.writerow(i)
+
+file.close()
+
+
+
