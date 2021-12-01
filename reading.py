@@ -15,31 +15,35 @@ attachments = message2.Attachments
 subject1 = 'A new requisition has been posted by Ingka Group SE this is for default'
 subject2 = 'Closure Mails..'
 
+i=0
 for m in message:
     # if subject1 in m.Subject or subject2 in m.Subject:
     if subject1 in m.Subject:
-        text_file = open("raw_data.txt", "a")
+        filename="raw_data_"+i+".txt"
+        text_file = open("filename", "w+")
         text_file.write(m.body)
         text_file.close()
+        i+=1
 
-file = open("raw_data.txt", "r")
-
-contents = file.read()
-ind = contents.index("Requisition")
-contents=contents[ind:]
-contents = os.linesep.join([s for s in contents.splitlines() if s])
+for k in range(i):
+    filename="raw_data_"+k+".txt"
+    file = open(filename, "r")
+    contents = file.read()
+    ind = contents.index("Requisition")
+    contents=contents[ind:]
+    contents = os.linesep.join([s for s in contents.splitlines() if s])
 # print(contents)
 
-file = open('data.csv', 'w+', newline ='')   
-with file:
-    for i in contents.split("\n"):
-        i=i.strip()
-        i=i.split(":")
+    file = open('data.csv', 'w+', newline ='')   
+    with file:
+        for i in contents.split("\n"):
+            i=i.strip()
+            i=i.split(":")
     
-        write=csv.writer(file)
-        write.writerow(i)
+            write=csv.writer(file)
+            write.writerow(i)
 
-file.close()
+    file.close()
 
 
 
