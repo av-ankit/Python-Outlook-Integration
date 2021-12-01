@@ -19,14 +19,14 @@ i=0
 for m in message:
     # if subject1 in m.Subject or subject2 in m.Subject:
     if subject1 in m.Subject:
-        filename="raw_data_"+i+".txt"
-        text_file = open("filename", "w+")
+        filename="raw_data_"+str(i)+".txt"
+        text_file = open(filename, "w+")
         text_file.write(m.body)
         text_file.close()
         i+=1
 
 for k in range(i):
-    filename="raw_data_"+k+".txt"
+    filename="raw_data_"+str(k)+".txt"
     file = open(filename, "r")
     contents = file.read()
     ind = contents.index("Requisition")
