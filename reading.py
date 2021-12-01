@@ -32,18 +32,14 @@ for k in range(i):
     ind = contents.index("Requisition")
     contents=contents[ind:]
     contents = os.linesep.join([s for s in contents.splitlines() if s])
-# print(contents)
 
-    file = open('data.csv', 'w+', newline ='')   
+    file = open('data.csv', 'a', newline ='')   
     with file:
+        write=csv.writer(file)
         for i in contents.split("\n"):
             i=i.strip()
-            i=i.split(":")
-    
-            write=csv.writer(file)
+            i=i.split(":")            
             write.writerow(i)
+        write.writerow("\n")
 
     file.close()
-
-
-
